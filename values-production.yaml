@@ -1,11 +1,10 @@
 imagePullSecrets:
-  - name: ghcr-pull-secret
-
+- name: ghcr-pull-secret
 services:
   auth:
     image:
       repository: ghcr.io/byron-movie-cloud/auth-service
-      tag: latest
+      tag: b0f2bfeafe537d8695b62d2813939599de9646ad
   movie:
     image:
       repository: ghcr.io/byron-movie-cloud/movie-service
@@ -18,7 +17,6 @@ services:
     image:
       repository: ghcr.io/byron-movie-cloud/frontend
       tag: latest
-
 ingress:
   enabled: true
   className: nginx
