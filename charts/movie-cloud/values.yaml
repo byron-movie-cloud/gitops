@@ -1,0 +1,160 @@
+imagePullSecrets: []
+
+services:
+  auth:
+    enabled: true
+    image:
+      repository: ghcr.io/owner/auth-service
+      tag: latest
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8080
+    runAsUser: 10001
+    env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: prod
+      - name: DB_HOST
+        valueFrom:
+          secretKeyRef:
+            name: auth-db-credentials
+            key: host
+      - name: DB_PORT
+        valueFrom:
+          secretKeyRef:
+            name: auth-db-credentials
+            key: port
+      - name: DB_NAME
+        valueFrom:
+          secretKeyRef:
+            name: auth-db-credentials
+            key: name
+      - name: DB_USER
+        valueFrom:
+          secretKeyRef:
+            name: auth-db-credentials
+            key: user
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: auth-db-credentials
+            key: password
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 768Mi
+  movie:
+    enabled: true
+    image:
+      repository: ghcr.io/owner/movie-service
+      tag: latest
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8080
+    runAsUser: 10001
+    env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: prod
+      - name: DB_HOST
+        valueFrom:
+          secretKeyRef:
+            name: movie-db-credentials
+            key: host
+      - name: DB_PORT
+        valueFrom:
+          secretKeyRef:
+            name: movie-db-credentials
+            key: port
+      - name: DB_NAME
+        valueFrom:
+          secretKeyRef:
+            name: movie-db-credentials
+            key: name
+      - name: DB_USER
+        valueFrom:
+          secretKeyRef:
+            name: movie-db-credentials
+            key: user
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: movie-db-credentials
+            key: password
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 768Mi
+  user:
+    enabled: true
+    image:
+      repository: ghcr.io/owner/user-service
+      tag: latest
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8080
+    runAsUser: 10001
+    env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: prod
+      - name: DB_HOST
+        valueFrom:
+          secretKeyRef:
+            name: user-db-credentials
+            key: host
+      - name: DB_PORT
+        valueFrom:
+          secretKeyRef:
+            name: user-db-credentials
+            key: port
+      - name: DB_NAME
+        valueFrom:
+          secretKeyRef:
+            name: user-db-credentials
+            key: name
+      - name: DB_USER
+        valueFrom:
+          secretKeyRef:
+            name: user-db-credentials
+            key: user
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: user-db-credentials
+            key: password
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 768Mi
+  frontend:
+    enabled: true
+    image:
+      repository: ghcr.io/owner/frontend
+      tag: latest
+      pullPolicy: IfNotPresent
+    replicas: 1
+    port: 8080
+    runAsUser: 101
+    env: []
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
+
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+  host: movies.example.com
+  path: /
+  pathType: Prefix
