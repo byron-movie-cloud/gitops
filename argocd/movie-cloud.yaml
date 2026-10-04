@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: movie-cloud
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://github.com/byron-movie-cloud/gitops.git
+      targetRevision: HEAD
+      path: charts/movie-cloud
+      helm:
+        valueFiles:
+          - $values/values-production.yaml
+    - repoURL: https://github.com/byron-movie-cloud/gitops.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: movie-cloud
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
