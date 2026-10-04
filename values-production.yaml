@@ -12,7 +12,7 @@ services:
   user:
     image:
       repository: ghcr.io/byron-movie-cloud/user-service
-      tag: latest
+      tag: acac60b4bff749e9451679e3d45df97da6e10a41
   frontend:
     image:
       repository: ghcr.io/byron-movie-cloud/frontend
