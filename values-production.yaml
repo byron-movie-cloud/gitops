@@ -16,7 +16,7 @@ services:
   frontend:
     image:
       repository: ghcr.io/byron-movie-cloud/frontend
-      tag: latest
+      tag: 19d27e7d3167ef549c124d94e3500a30fd0e5858
 ingress:
   enabled: true
   className: nginx
