@@ -12,6 +12,15 @@ spec:
       helm:
         valueFiles:
           - $values/values-production.yaml
+        values: |
+          imagePullSecrets:
+            - name: ghcr-pull-secret
+          services:
+            movie:
+              image:
+                tag: 0d886206ad98dc3f4088536abccb23bc86d8c7a1
+          ingress:
+            host: a37a8e75e89eb43498f8a939d214fe50-398867677.eu-north-1.elb.amazonaws.com
     - repoURL: https://github.com/byron-movie-cloud/gitops.git
       targetRevision: HEAD
       ref: values
